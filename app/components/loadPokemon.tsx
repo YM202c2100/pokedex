@@ -15,7 +15,7 @@ interface Pokemon{
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState<number>(1)
   const {ref, inView} = useInView()
 
   const loadMorePokemons = async (page:number)=>{
@@ -27,12 +27,13 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
     if(inView){
       console.log("inview")
       loadMorePokemons(page)
+      setPage(prev => prev+1)
     }
   },[inView])
 
   return(<>
-    <div className=" bg-slate-500">
-      {pokemons.map(pokemon => <div>{pokemon.name}</div>)}
+    <div>
+      {pokemons.map(pokemon => <div key={pokemon.name} className="h-[30px] mb-10">{pokemon.name}</div>)}
     </div>
     <div ref={ref} className="bg-red-400">inview</div>
   </>)
