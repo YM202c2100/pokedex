@@ -1,4 +1,8 @@
-const LoadPokemon:React.FC = ()=>{
+interface Props{
+  search:string | undefined
+}
+
+const LoadPokemon:React.FC<Props> = ()=>{
   return(
     <div>LoadPokemonComponent</div>
   )
