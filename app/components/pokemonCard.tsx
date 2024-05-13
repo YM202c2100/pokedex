@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import type { Pokemon } from "./loadPokemon"
 import { useEffect, useState } from "react"
 
@@ -27,7 +29,11 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
   },[])
 
   return(
-    <div className="h-[30px] mb-10">{pokemon.name}</div>
+    <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonInfo?.order}.png`}
+           alt={`Image of ${pokemonInfo?.name}`}
+           width={300}
+           height={300}
+    />
   )
 }
 
