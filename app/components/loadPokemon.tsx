@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { fetchFromPokeAPI } from "../actions/getPokemon"
 import { useInView } from "react-intersection-observer"
 
+import PokemonCard from "./pokemonCard"
+
 interface Props{
   search:string | undefined
 }
@@ -33,10 +35,11 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
 
   return(<>
     <div>
-      {pokemons.map(pokemon => <div key={pokemon.name} className="h-[30px] mb-10">{pokemon.name}</div>)}
+      {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
     </div>
     <div ref={ref} className="bg-red-400">inview</div>
   </>)
 }
 
 export default LoadPokemon
+export type {Pokemon}
