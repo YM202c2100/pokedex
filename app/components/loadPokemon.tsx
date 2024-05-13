@@ -34,7 +34,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   },[inView])
 
   return(<>
-    <div>
+    <div className="flex flex-wrap w-[900px] m-auto">
       {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
     </div>
     <div ref={ref} className="bg-red-400">inview</div>
