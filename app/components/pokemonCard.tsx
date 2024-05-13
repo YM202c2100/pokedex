@@ -13,7 +13,7 @@ interface PokemonInfo{
   types:string[]
 }
 const PokemonCard:React.FC<Props> = ({pokemon}) =>{
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>()
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({name:"bulbasaur", order:0, types:["grass", "pison"]})
 
   const fetchPokemonInfo = async (pokemon:Pokemon)=>{
     const fetchedInfo:{types:{type:{name:string}}[], order:number} = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
