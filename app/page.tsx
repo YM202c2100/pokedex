@@ -1,4 +1,5 @@
 import LoadPokemon from "./components/loadPokemon";
+import Search from "./components/search";
 
 export default function Page({searchParams}
 :{
@@ -9,6 +10,7 @@ export default function Page({searchParams}
                                        undefined
 
   return (<>
+    <Search/>
     <LoadPokemon search={searchQuery}/>
   </>)
 }
