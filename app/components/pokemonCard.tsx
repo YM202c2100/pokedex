@@ -21,7 +21,8 @@ interface PokemonInfo{
   spriteUrl:string
 }
 const PokemonCard:React.FC<Props> = ({pokemon}) =>{
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({name:"Pokemon", order:0, types:[""], spriteUrl:"/../../public/noimage.png"})
+  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>()
+  // const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({name:"Pokemon", order:0, types:[""], spriteUrl:"/../../public/noimage.png"})
 
   const fetchPokemonInfo = async (pokemon:Pokemon)=>{
     const fetchedInfo:FetchedDataFormat = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
@@ -39,6 +40,7 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
   },[])
 
   return(
+    pokemonInfo &&
     <Image src={pokemonInfo.spriteUrl}
            alt={`Image of ${pokemonInfo?.name}`}
            width={300}
