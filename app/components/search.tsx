@@ -6,7 +6,7 @@ import { useDebounce } from "use-debounce"
 
 const Search:React.FC = ()=>{
   const [text, setText] = useState("")
-  const [query] = useDebounce(text, 3000)
+  const [query] = useDebounce(text, 750)
   const router = useRouter()
 
   const submitQuery = ()=>{
