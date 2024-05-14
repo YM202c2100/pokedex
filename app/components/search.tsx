@@ -2,19 +2,21 @@
 
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import { useDebounce } from "use-debounce"
 
 const Search:React.FC = ()=>{
   const [text, setText] = useState("")
+  const [query] = useDebounce(text, 750)
   const router = useRouter()
 
   const submitQuery = ()=>{
-    if(text === ""){
+    if(query === ""){
       router.push("./")
     }else{
-      router.push(`./?search=${text}`)
+      router.push(`./?search=${query}`)
     }
   }
-  useEffect(submitQuery,[text])
+  useEffect(submitQuery,[query])
 
   return(<>
     <form onSubmit={(e)=>{e.preventDefault();console.log(`clicked and sent value: ${text}`)}}>
