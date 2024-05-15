@@ -21,7 +21,10 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   const {ref, inView} = useInView()
 
   const loadMorePokemons = async (page:number)=>{
-    const fetchedPokemons =  await fetchFromPokeAPI({offset:(page-1)*24})
+    let fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI({offset:(page-1)*24})
+    if(search){
+      fetchedPokemons = fetchedPokemons.filter(pokemon => pokemon.name.startsWith(search))
+    }
     setPokemons([...pokemons, ...fetchedPokemons])
   }
 
