@@ -17,10 +17,9 @@ interface Pokemon{
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [page, setPage] = useState<number>(1)
   const {ref, inView} = useInView()
 
-  const loadMorePokemons = async (page:number)=>{
+  const loadMorePokemons = async ()=>{
     let fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
     if(search){
       fetchedPokemons = fetchedPokemons.filter(pokemon => pokemon.name.startsWith(search))
@@ -31,8 +30,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   useEffect(()=>{
     if(inView){
       console.log("inview")
-      loadMorePokemons(page)
-      setPage(prev => prev+1)
+      loadMorePokemons()
     }
   },[inView])
 
