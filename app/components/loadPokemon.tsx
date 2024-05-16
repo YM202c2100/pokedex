@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { fetchFromPokeAPI } from "../actions/getPokemon"
+import { fetchFromPokeAPI, filteringPokemons } from "../actions/getPokemon"
 import { useInView } from "react-intersection-observer"
 
 import PokemonCard from "./pokemonCard"
@@ -16,15 +16,28 @@ interface Pokemon{
 }
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
+  const amountFetching:number = 24
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
+  const [offset, setOffset] = useState<number>(0)
   const {ref, inView} = useInView()
 
   const loadMorePokemons = async ()=>{
-    let fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
+    const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
+    let newPokemons:Pokemon[]
+
     if(search){
-      fetchedPokemons = fetchedPokemons.filter(pokemon => pokemon.name.startsWith(search))
+      const filterdResult = filteringPokemons({
+        search:search,
+        fetchedData:fetchedPokemons,
+        offset:offset
+      })
+      newPokemons = filterdResult.filterdData
+      setOffset(filterdResult.newOffset)
+    }else{
+      newPokemons = fetchedPokemons.slice(offset, offset+amountFetching)
+      setOffset(prev => prev+amountFetching)
     }
-    setPokemons([...pokemons, ...fetchedPokemons])
+    setPokemons([...pokemons, ...newPokemons])
   }
 
   useEffect(()=>{
