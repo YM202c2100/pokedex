@@ -26,13 +26,9 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
     let newPokemons:Pokemon[]
 
     if(search){
-      const filterdResult = filteringPokemons({
-        search:search,
-        fetchedData:fetchedPokemons,
-        offset:offset
-      })
-      newPokemons = filterdResult.filterdData
-      setOffset(filterdResult.newOffset)
+      const filteredResult = filteringPokemons({search:search,fetchedData:fetchedPokemons,offset:offset})
+      newPokemons = filteredResult.filteredData
+      setOffset(filteredResult.newOffset)
     }else{
       newPokemons = fetchedPokemons.slice(offset, offset+amountFetching)
       setOffset(prev => prev+amountFetching)

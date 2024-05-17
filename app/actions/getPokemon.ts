@@ -6,8 +6,8 @@ const fetchFromPokeAPI = async ()=> {
   return fetchedData.results
 }
 
-interface filterdResult{
-  filterdData:Pokemon[],
+interface filteredResult{
+  filteredData:Pokemon[],
   newOffset:number
 }
 
@@ -16,18 +16,18 @@ const filteringPokemons = ({search, fetchedData, offset}
   search:string,
   fetchedData:Pokemon[],
   offset:number
- }):filterdResult => {
+ }):filteredResult => {
 
   let i=offset
-  let filterdData:Pokemon[] = [];
-  while(filterdData.length !== 24){
+  let filteredData:Pokemon[] = [];
+  while(filteredData.length !== 24){
     if(fetchedData[i].name.startsWith(search)){
-      filterdData.push(fetchedData[i])
+      filteredData.push(fetchedData[i])
     }
     i++
   }
 
-  return {filterdData:filterdData, newOffset:i}
+  return {filteredData:filteredData, newOffset:i}
 }
 
 export {fetchFromPokeAPI, filteringPokemons}
