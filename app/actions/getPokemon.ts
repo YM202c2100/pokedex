@@ -17,11 +17,12 @@ const filteringPokemons = ({search, fetchedData, offset}
   fetchedData:Pokemon[],
   offset:number
  }):filterdResult => {
-  let filterdData:Pokemon[] = [];
+
   let i=offset
+  let filterdData:Pokemon[] = [];
   while(filterdData.length !== 24){
     if(fetchedData[i].name.startsWith(search)){
-      fetchedData.push(fetchedData[i])
+      filterdData.push(fetchedData[i])
     }
     i++
   }
