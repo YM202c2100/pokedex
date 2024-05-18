@@ -17,20 +17,20 @@ interface Pokemon{
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [page, setPage] = useState<number>(1)
+  const [offset, setOffset] = useState<number>(1)
   const {ref, inView} = useInView()
 
-  const loadMorePokemons = async (page:number)=>{
+  const loadMorePokemons = async (offset:number)=>{
     const fetchedPokemons =  await fetchAllFromPokeAPI()
-    const newPokemons = fetchedPokemons.slice(page, page+24)
+    const newPokemons = fetchedPokemons.slice(offset, offset+24)
     setPokemons([...pokemons, ...newPokemons])
   }
 
   useEffect(()=>{
     if(inView){
       console.log("inview")
-      loadMorePokemons(page)
-      setPage(prev => prev+24)
+      loadMorePokemons(offset)
+      setOffset(prev => prev+24)
     }
   },[inView])
 
