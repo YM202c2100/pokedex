@@ -17,7 +17,7 @@ interface Pokemon{
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [offset, setOffset] = useState<number>(1)
+  const [offset, setOffset] = useState<number>(0)
   const {ref, inView} = useInView()
 
   const loadMorePokemons = async (offset:number)=>{
