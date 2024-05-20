@@ -11,9 +11,9 @@ const Search:React.FC = ()=>{
 
   const submitQuery = ()=>{
     if(query === ""){
-      router.push("./")
+      router.push("/")
     }else{
-      router.push(`./?search=${query}`)
+      router.push(`/?search=${query}`)
     }
   }
   useEffect(submitQuery,[query])

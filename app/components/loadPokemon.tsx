@@ -7,7 +7,8 @@ import { useInView } from "react-intersection-observer"
 import PokemonCard from "./pokemonCard"
 
 interface Props{
-  search:string | undefined
+  search:string | undefined,
+  initPokemons: Pokemon[]
 }
 
 interface Pokemon{
@@ -15,13 +16,15 @@ interface Pokemon{
   url:string
 }
 
-const LoadPokemon:React.FC<Props> = ({search})=>{
+const LoadPokemon:React.FC<Props> = ({search, initPokemons})=>{
   const amountFetching:number = 24
-  const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [offset, setOffset] = useState<number>(0)
+  const [pokemons, setPokemons] = useState<Pokemon[]>(initPokemons)
+  const [offset, setOffset] = useState<number>(24)
   const {ref, inView} = useInView()
+  console.log(`offset on LoadPokemon called:${offset}`)
 
   const loadMorePokemons = async ()=>{
+    console.log(`offset on loadMorePokemons called:${offset}`)
     const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
     let newPokemons:Pokemon[]
 
