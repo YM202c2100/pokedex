@@ -1,3 +1,4 @@
+import { fetchFromPokeAPI, filteringPokemons } from "./actions/getPokemon";
 import LoadPokemon from "./components/loadPokemon";
 import Search from "./components/search";
 
