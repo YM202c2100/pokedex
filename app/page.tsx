@@ -1,14 +1,14 @@
 import LoadPokemon from "./components/loadPokemon";
+import Search from "./components/search";
 
-export default function Page({searchParams}
+export default async function Page({searchParams}
 :{
-  searchParams:{[key:string]:string | undefined};
+  searchParams:{[key:string]:string};
 }){
-  const searchQuery:string|undefined = searchParams.search ?
-                                       searchParams.search :
-                                       undefined
-
   return (<>
-    <LoadPokemon search={searchQuery}/>
+    <Search/>
+    <LoadPokemon 
+      search={searchParams.search} 
+    />
   </>)
 }
