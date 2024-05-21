@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+
 import { fetchFromPokeAPI, filteringPokemons } from "../actions/getPokemon"
 import { useInView } from "react-intersection-observer"
 
@@ -66,7 +67,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
     <div className="flex flex-wrap w-[900px] m-auto">
       {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
     </div>
-    <div ref={ref} className="bg-red-400">inview</div>
+    <div ref={ref}></div>
   </>)
 }
 
