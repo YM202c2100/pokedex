@@ -7,8 +7,7 @@ import { useInView } from "react-intersection-observer"
 import PokemonCard from "./pokemonCard"
 
 interface Props{
-  search:string | undefined,
-  initPokemons: Pokemon[]
+  search:string
 }
 
 interface Pokemon{
@@ -16,15 +15,13 @@ interface Pokemon{
   url:string
 }
 
-const LoadPokemon:React.FC<Props> = ({search, initPokemons})=>{
+const LoadPokemon:React.FC<Props> = ({search})=>{
   const amountFetching:number = 24
-  const [pokemons, setPokemons] = useState<Pokemon[]>(initPokemons)
-  const [offset, setOffset] = useState<number>(24)
+  const [pokemons, setPokemons] = useState<Pokemon[]>([])
+  const [offset, setOffset] = useState<number>(0)
   const {ref, inView} = useInView()
-  console.log(`offset on LoadPokemon called:${offset}`)
 
   const loadMorePokemons = async ()=>{
-    console.log(`offset on loadMorePokemons called:${offset}`)
     const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
     let newPokemons:Pokemon[]
 
@@ -38,6 +35,25 @@ const LoadPokemon:React.FC<Props> = ({search, initPokemons})=>{
     }
     setPokemons([...pokemons, ...newPokemons])
   }
+
+  const initLoadPokemons = async ()=>{
+    const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
+    let newPokemons:Pokemon[]
+    if(search){
+      const filteredResult = filteringPokemons({search:search,fetchedData:fetchedPokemons,offset:0})
+      newPokemons = filteredResult.filteredData
+      setOffset(filteredResult.newOffset)
+    }else{
+      newPokemons = fetchedPokemons.slice(0, 24)
+      setOffset(24)
+    }
+    setPokemons(newPokemons)
+  }
+
+  useEffect(()=>{
+    console.log(`change search : ${search}`)
+    initLoadPokemons()
+  },[search])
 
   useEffect(()=>{
     if(inView){

@@ -9,23 +9,18 @@ const Search:React.FC = ()=>{
   const [query] = useDebounce(text, 750)
   const router = useRouter()
 
-  const submitQuery = ()=>{
-    if(query === ""){
-      router.push("/")
-    }else{
-      router.push(`/?search=${query}`)
+  useEffect(()=>{
+    if(query){
+      router.replace(`/?search=${query}`)
     }
-  }
-  useEffect(submitQuery,[query])
+  },[query])
 
   return(
-    <form onSubmit={(e)=>{e.preventDefault()}}>
-      <input type="text"
+    <input type="text"
            onChange={(e)=>setText(e.target.value)} 
            value={text}
            className="border"
-      />
-    </form>
+    />
   )
 }
 
