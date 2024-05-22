@@ -57,7 +57,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   },[search])
 
   useEffect(()=>{
-    if(inView){
+    if(inView && offset >= 0){
       console.log("inview")
       loadMorePokemons()
     }
