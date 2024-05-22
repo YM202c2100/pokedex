@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image"
 
 import type { Pokemon } from "./loadPokemon"
@@ -11,7 +13,7 @@ interface FetchedDataFormat{
   name:string,
   order:number,
   types:{type:{name:string}}[]
-  sprites:{other:{"official-artwork":{front_default:string, front_shiny:string}}}
+  sprites:{other:{"official-artwork":{front_default:string|undefined, front_shiny:string}}}
 }
 
 interface PokemonInfo{
@@ -28,10 +30,16 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
     const fetchedInfo:FetchedDataFormat = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
                                                 .then(res => res.json())
     const types:string[] = fetchedInfo.types.map(typeInfo => typeInfo.type.name)
+    let spriteUrl:string
+    if(fetchedInfo.sprites.other["official-artwork"].front_default){
+      spriteUrl = fetchedInfo.sprites.other["official-artwork"].front_default
+    }else{
+      return
+    }
     const newPokemonInfo:PokemonInfo = {name:pokemon.name,
                                         order:fetchedInfo.order,
                                         types:types,
-                                        spriteUrl:fetchedInfo.sprites.other["official-artwork"].front_default}
+                                        spriteUrl:spriteUrl}
     setPokemonInfo(newPokemonInfo)
   }
 
