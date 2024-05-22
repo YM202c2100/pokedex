@@ -45,8 +45,8 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
       newPokemons = filteredResult.filteredData
       setOffset(filteredResult.newOffset)
     }else{
-      newPokemons = fetchedPokemons.slice(0, 24)
-      setOffset(24)
+      newPokemons = fetchedPokemons.slice(0, amountFetching)
+      setOffset(amountFetching)
     }
     setPokemons(newPokemons)
   }
