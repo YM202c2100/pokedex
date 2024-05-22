@@ -32,7 +32,11 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
       setOffset(filteredResult.newOffset)
     }else{
       newPokemons = fetchedPokemons.slice(offset, offset+amountFetching)
-      setOffset(prev => prev+amountFetching)
+      if(newPokemons.length === amountFetching){
+        setOffset((prev) => prev+amountFetching)
+      }else{
+        setOffset(-1)
+      }
     }
     setPokemons([...pokemons, ...newPokemons])
   }
@@ -45,8 +49,8 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
       newPokemons = filteredResult.filteredData
       setOffset(filteredResult.newOffset)
     }else{
-      newPokemons = fetchedPokemons.slice(0, 24)
-      setOffset(24)
+      newPokemons = fetchedPokemons.slice(0, amountFetching)
+      setOffset(amountFetching)
     }
     setPokemons(newPokemons)
   }
@@ -57,7 +61,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   },[search])
 
   useEffect(()=>{
-    if(inView){
+    if(inView && offset >= 0){
       console.log("inview")
       loadMorePokemons()
     }

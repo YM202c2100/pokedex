@@ -20,11 +20,18 @@ const filteringPokemons = ({search, fetchedData, offset}
 
   let i=offset
   let filteredData:Pokemon[] = [];
-  while(filteredData.length !== 24){
+  while(true){
     if(fetchedData[i].name.startsWith(search)){
       filteredData.push(fetchedData[i])
+      if(filteredData.length === 24){
+        break
+      }
     }
     i++
+    if(i >= fetchedData.length){
+      i = -1
+      break
+    }
   }
 
   return {filteredData:filteredData, newOffset:i}
