@@ -54,6 +54,10 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
            width={300}
            height={300}
     />
+      }
+      <span className="text-2xl">{pokemonInfo?.name}</span>
+    </div>
+    
   )
 }
 
