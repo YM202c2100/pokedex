@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={yomogi.className}>{children}</body>
+      <body className={`bg-orange-100 ${yomogi.className}`}>{children}</body>
     </html>
   );
 }
