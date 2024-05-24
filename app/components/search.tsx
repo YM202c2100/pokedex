@@ -16,11 +16,14 @@ const Search:React.FC = ()=>{
   },[query])
 
   return(
-    <input type="text"
-           onChange={(e)=>setText(e.target.value)} 
-           value={text}
-           className="border"
-    />
+    <div className="flex">
+      <div>検索：</div>
+      <input type="text"
+             onChange={(e)=>setText(e.target.value)} 
+             value={text}
+             className="border"
+      />
+    </div>
   )
 }
 
