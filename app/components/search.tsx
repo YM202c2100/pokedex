@@ -16,7 +16,7 @@ const Search:React.FC = ()=>{
   },[query])
 
   return(
-    <div className="flex">
+    <div className="flex my-5">
       <div>検索：</div>
       <input type="text"
              onChange={(e)=>setText(e.target.value)} 
