@@ -5,10 +5,12 @@ export default async function Page({searchParams}
 :{
   searchParams:{[key:string]:string};
 }){
-  return (<>
-    <Search/>
-    <LoadPokemon 
-      search={searchParams.search} 
-    />
-  </>)
+  return (
+    <div className="container flex flex-col items-center mx-auto">
+      <Search/>
+      <LoadPokemon 
+        search={searchParams.search} 
+      />
+    </div>
+  )
 }

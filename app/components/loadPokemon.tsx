@@ -68,7 +68,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   },[inView])
 
   return(<>
-    <div className="flex flex-wrap w-[900px] m-auto">
+    <div className="flex justify-center flex-wrap w-full m-auto">
       {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
     </div>
     <div ref={ref}>　</div>
