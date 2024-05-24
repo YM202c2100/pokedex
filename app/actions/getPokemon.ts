@@ -24,17 +24,16 @@ const filteringPokemons = ({search, fetchedData, offset}
     if(fetchedData[i].name.startsWith(search)){
       filteredData.push(fetchedData[i])
       if(filteredData.length === 24){
-        break
+        return {filteredData:filteredData, newOffset:i+1}
       }
     }
-    i++
-    if(i >= fetchedData.length){
-      i = -1
-      break
+    
+    if(i+1 >= fetchedData.length){
+      return {filteredData:filteredData, newOffset:-1}
     }
-  }
 
-  return {filteredData:filteredData, newOffset:i}
+    i++
+  }
 }
 
 export {fetchFromPokeAPI, filteringPokemons}
