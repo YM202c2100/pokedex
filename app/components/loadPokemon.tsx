@@ -81,7 +81,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
       <div className="flex justify-center flex-wrap w-full mx-auto mt-28 md:mt-16">
         {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
       </div>
-      {isloading ? <div className="text-2xl">Loading...</div>:<div ref={ref}>　</div>}
+      {isloading ? <div className="text-2xl my-28">Loading...</div>:<div ref={ref}>　</div>}
 
     </>)
 }
