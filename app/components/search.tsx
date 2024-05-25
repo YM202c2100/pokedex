@@ -3,9 +3,11 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useDebounce } from "use-debounce"
+import { useSearchParams } from "next/navigation"
 
 const Search:React.FC = ()=>{
-  const [text, setText] = useState("")
+  const searchParams = useSearchParams().get("search")
+  const [text, setText] = useState(searchParams ? searchParams : "")
   const [query] = useDebounce(text, 750)
   const router = useRouter()
 
