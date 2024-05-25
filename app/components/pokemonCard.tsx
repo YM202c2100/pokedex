@@ -63,3 +63,4 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
 }
 
 export default PokemonCard
+export type {FetchedDataFormat}

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { fetchFromPokeAPI, filteringPokemons } from "../actions/getPokemon"
 import { useInView } from "react-intersection-observer"
 
-import PokemonCard from "./pokemonCard"
+import PokemonCard, { FetchedDataFormat } from "./pokemonCard"
 
 interface Props{
   search:string
@@ -13,7 +13,8 @@ interface Props{
 
 interface Pokemon{
   name:string,
-  url:string
+  url:string,
+  info?:FetchedDataFormat
 }
 
 const LoadPokemon:React.FC<Props> = ({search})=>{
@@ -38,7 +39,8 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
         setOffset(-1)
       }
     }
-    setPokemons([...pokemons, ...newPokemons])
+    // setPokemons([...pokemons, ...newPokemons])
+    return [...pokemons, ...newPokemons]
   }
 
   const initLoadPokemons = async ()=>{
@@ -52,16 +54,43 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
       newPokemons = fetchedPokemons.slice(0, amountFetching)
       setOffset(amountFetching)
     }
-    setPokemons(newPokemons)
+    // setPokemons(newPokemons)
+    return newPokemons
   }
 
   useEffect(()=>{
-    initLoadPokemons()
+    const fetchPokemonInfo = async(pokemon:Pokemon)=>{
+      const info = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
+      pokemon.info = info
+      return pokemon
+    }
+
+    const updatePokemons = async() =>{
+      const selectedPokemons = await initLoadPokemons()
+      const pokemonPromises = selectedPokemons.map(pokemon => fetchPokemonInfo(pokemon))
+      const newPokemons:Pokemon[] = await Promise.all(pokemonPromises)
+      setPokemons(newPokemons)
+    }
+    //setLoading
+    updatePokemons()
   },[search])
 
   useEffect(()=>{
     if(inView && offset >= 0){
-      loadMorePokemons()
+      const fetchPokemonInfo = async(pokemon:Pokemon)=>{
+        const info = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
+        pokemon.info = info
+        return pokemon
+      }
+  
+      const updatePokemons = async() =>{
+        const selectedPokemons:Pokemon[] = await loadMorePokemons()
+        const pokemonPromises = selectedPokemons.map(pokemon => fetchPokemonInfo(pokemon))
+        const newPokemons:Pokemon[] = await Promise.all(pokemonPromises)
+        setPokemons(newPokemons)
+      }
+      //setLoading
+      updatePokemons()
     }
   },[inView])
 
