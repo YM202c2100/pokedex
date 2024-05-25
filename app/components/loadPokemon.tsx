@@ -21,6 +21,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   const amountFetching:number = 24
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
   const [offset, setOffset] = useState<number>(0)
+  const [isloading, setLoading] = useState<boolean>(false)
   const {ref, inView} = useInView()
 
   const loadPokemons = async ({initDisplay}:{initDisplay:boolean})=>{
@@ -59,31 +60,29 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
     const pokemonPromises:Promise<Pokemon>[] = selectedPokemons.map(pokemon => fetchPokemonInfo(pokemon))
     const newPokemons:Pokemon[] = await Promise.all(pokemonPromises)
     setPokemons(newPokemons)
+    setLoading(false)
   }
 
   useEffect(()=>{
-    //setLoading
+    setLoading(true)
     updatePokemons(()=>loadPokemons({initDisplay:true}))
   },[search])
 
   useEffect(()=>{
     if(inView && offset >= 0){
-      //setLoading
+      setLoading(true)
       updatePokemons(()=>loadPokemons({initDisplay:false}))
     }
   },[inView])
 
   return(<>
-        {pokemons.length !== 0 ? (
-          <div>
-            <div className="flex justify-center flex-wrap w-full mx-auto mt-28 md:mt-16">
-            {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
-            </div>
-            <div ref={ref}>　</div>
-          </div>
-        ) : (
-          <p className="mt-36 text-4xl">見つかりませんでした</p>
-        )}
+      {(pokemons.length === 0) && (!isloading) && <p className="mt-36 text-4xl">見つかりませんでした</p>}
+
+      <div className="flex justify-center flex-wrap w-full mx-auto mt-28 md:mt-16">
+        {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
+      </div>
+      {isloading ? <div>Loading...</div>:<div ref={ref}>　</div>}
+
     </>)
 }
 
