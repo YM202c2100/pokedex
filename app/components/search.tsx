@@ -17,8 +17,16 @@ const Search:React.FC = ()=>{
     }
   },[query])
 
+  const clickHandler = ()=>{
+    router.push("/")
+    setText("")
+    router.refresh()
+  }
+
   return(
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center">
+      <button className="bg-orange-200 p-2 rounded-2xl mr-3"
+              onClick={clickHandler}>一覧表示</button>
       <div>検索：</div>
       <input type="text"
              onChange={(e)=>setText(e.target.value)} 
