@@ -23,63 +23,53 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   const [offset, setOffset] = useState<number>(0)
   const {ref, inView} = useInView()
 
-  const loadMorePokemons = async ()=>{
+  const loadPokemons = async ({initDisplay}:{initDisplay:boolean})=>{
     const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
     let newPokemons:Pokemon[]
 
     if(search){
-      const filteredResult = filteringPokemons({search:search,fetchedData:fetchedPokemons,offset:offset})
+      const filteredResult = filteringPokemons({search:search,
+                                                fetchedData:fetchedPokemons,
+                                                offset:(initDisplay) ? 0:offset
+                                              })
       newPokemons = filteredResult.filteredData
       setOffset(filteredResult.newOffset)
     }else{
-      newPokemons = fetchedPokemons.slice(offset, offset+amountFetching)
+      newPokemons = (initDisplay) ? fetchedPokemons.slice(0, amountFetching)
+                                  : fetchedPokemons.slice(offset, offset+amountFetching)
+
       if(newPokemons.length === amountFetching){
         setOffset((prev) => prev+amountFetching)
       }else{
         setOffset(-1)
       }
     }
-    // setPokemons([...pokemons, ...newPokemons])
-    return [...pokemons, ...newPokemons]
-  }
 
-  const initLoadPokemons = async ()=>{
-    const fetchedPokemons:Pokemon[] =  await fetchFromPokeAPI()
-    let newPokemons:Pokemon[]
-    if(search){
-      const filteredResult = filteringPokemons({search:search,fetchedData:fetchedPokemons,offset:0})
-      newPokemons = filteredResult.filteredData
-      setOffset(filteredResult.newOffset)
-    }else{
-      newPokemons = fetchedPokemons.slice(0, amountFetching)
-      setOffset(amountFetching)
-    }
-    // setPokemons(newPokemons)
-    return newPokemons
+    return (initDisplay) ? newPokemons : [...pokemons, ...newPokemons]
   }
 
   const fetchPokemonInfo = async(pokemon:Pokemon):Promise<Pokemon> => {
-      const info = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
-      pokemon.info = info
-      return pokemon
-    }
+    const info = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`).then(res => res.json())
+    pokemon.info = info
+    return pokemon
+  }
 
   const updatePokemons = async(loadFunction : ()=>Promise<Pokemon[]>) =>{
     const selectedPokemons:Pokemon[] = await loadFunction()
     const pokemonPromises:Promise<Pokemon>[] = selectedPokemons.map(pokemon => fetchPokemonInfo(pokemon))
-      const newPokemons:Pokemon[] = await Promise.all(pokemonPromises)
-      setPokemons(newPokemons)
-    }
+    const newPokemons:Pokemon[] = await Promise.all(pokemonPromises)
+    setPokemons(newPokemons)
+  }
 
   useEffect(()=>{
     //setLoading
-    updatePokemons(initLoadPokemons)
+    updatePokemons(()=>loadPokemons({initDisplay:true}))
   },[search])
 
   useEffect(()=>{
     if(inView && offset >= 0){
       //setLoading
-      updatePokemons(loadMorePokemons)
+      updatePokemons(()=>loadPokemons({initDisplay:false}))
     }
   },[inView])
 
