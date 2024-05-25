@@ -7,7 +7,10 @@ export default async function Page({searchParams}
 }){
   return (
     <div className="container flex flex-col items-center mx-auto">
-      <Search/>
+      <header className="bg-indigo-50 w-screen fixed py-5 flex flex-col justify-center">
+        <div className="text-3xl mb-2 mx-auto md:absolute md:top-4 md:ml-3">ポケモン図鑑</div>
+        <Search/>
+      </header>
       <LoadPokemon 
         search={searchParams.search} 
       />
