@@ -48,12 +48,17 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
   },[])
 
   return(
-    pokemonInfo &&
-    <Image src={pokemonInfo.spriteUrl}
+    <div className="bg-orange-50 m-6 rounded-3xl flex flex-col items-center shadow-lg">
+      {pokemonInfo &&
+        <Image src={pokemonInfo.spriteUrl}
            alt={`Image of ${pokemonInfo?.name}`}
            width={300}
            height={300}
-    />
+        />
+      }
+      <span className="text-2xl">{pokemonInfo?.name}</span>
+    </div>
+    
   )
 }
 
