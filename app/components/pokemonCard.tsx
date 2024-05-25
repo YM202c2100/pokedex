@@ -23,12 +23,10 @@ interface PokemonInfo{
   spriteUrl:string
 }
 const PokemonCard:React.FC<Props> = ({pokemon}) =>{
-  const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>()
-  // const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({name:"Pokemon", order:0, types:[""], spriteUrl:"/../../public/noimage.png"})
+  // const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>()
 
-  const fetchPokemonInfo = async (pokemon:Pokemon)=>{
-    const fetchedInfo:FetchedDataFormat = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-                                                .then(res => res.json())
+  // useEffect(()=>{
+    const fetchedInfo:FetchedDataFormat = pokemon.info
     const types:string[] = fetchedInfo.types.map(typeInfo => typeInfo.type.name)
     let spriteUrl:string
     if(fetchedInfo.sprites.other["official-artwork"].front_default){
@@ -36,26 +34,20 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
     }else{
       return
     }
-    const newPokemonInfo:PokemonInfo = {name:pokemon.name,
+    const pokemonInfo:PokemonInfo = {name:pokemon.name,
                                         order:fetchedInfo.order,
                                         types:types,
                                         spriteUrl:spriteUrl}
-    setPokemonInfo(newPokemonInfo)
-  }
-
-  useEffect(()=>{
-    fetchPokemonInfo(pokemon)
-  },[])
-
+    // setPokemonInfo(newPokemonInfo)
+  // },[])
+  
   return(
     <div className="bg-orange-50 m-6 rounded-3xl flex flex-col items-center shadow-lg">
-      {pokemonInfo &&
-        <Image src={pokemonInfo.spriteUrl}
+      <Image src={pokemonInfo.spriteUrl}
            alt={`Image of ${pokemonInfo?.name}`}
            width={300}
            height={300}
-        />
-      }
+      />
       <span className="text-2xl">{pokemonInfo?.name}</span>
     </div>
     
@@ -63,3 +55,4 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
 }
 
 export default PokemonCard
+export type {FetchedDataFormat}
