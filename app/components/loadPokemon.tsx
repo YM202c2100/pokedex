@@ -14,7 +14,7 @@ interface Props{
 interface Pokemon{
   name:string,
   url:string,
-  info?:FetchedDataFormat
+  info:FetchedDataFormat
 }
 
 const LoadPokemon:React.FC<Props> = ({search})=>{

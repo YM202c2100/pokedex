@@ -24,11 +24,9 @@ interface PokemonInfo{
 }
 const PokemonCard:React.FC<Props> = ({pokemon}) =>{
   const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>()
-  // const [pokemonInfo, setPokemonInfo] = useState<PokemonInfo>({name:"Pokemon", order:0, types:[""], spriteUrl:"/../../public/noimage.png"})
 
-  const fetchPokemonInfo = async (pokemon:Pokemon)=>{
-    const fetchedInfo:FetchedDataFormat = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-                                                .then(res => res.json())
+  useEffect(()=>{
+    const fetchedInfo:FetchedDataFormat = pokemon.info
     const types:string[] = fetchedInfo.types.map(typeInfo => typeInfo.type.name)
     let spriteUrl:string
     if(fetchedInfo.sprites.other["official-artwork"].front_default){
@@ -41,12 +39,8 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
                                         types:types,
                                         spriteUrl:spriteUrl}
     setPokemonInfo(newPokemonInfo)
-  }
-
-  useEffect(()=>{
-    fetchPokemonInfo(pokemon)
   },[])
-
+  
   return(
     <div className="bg-orange-50 m-6 rounded-3xl flex flex-col items-center shadow-lg">
       {pokemonInfo &&
