@@ -16,7 +16,7 @@ const Search:React.FC = ()=>{
   },[query])
 
   return(
-    <div className="fixed flex justify-center w-screen py-5 bg-orange-100">
+    <div className="fixed flex justify-center w-screen py-5 bg-indigo-50">
       <div>検索：</div>
       <input type="text"
              onChange={(e)=>setText(e.target.value)} 
