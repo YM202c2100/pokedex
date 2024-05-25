@@ -66,11 +66,17 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   },[inView])
 
   return(<>
-    <div className="flex justify-center flex-wrap w-full mx-auto mt-28 md:mt-16">
-      {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
-    </div>
-    <div ref={ref}>　</div>
-  </>)
+        {pokemons.length !== 0 ? (
+          <div>
+            <div className="flex justify-center flex-wrap w-full mx-auto mt-28 md:mt-16">
+            {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
+            </div>
+            <div ref={ref}>　</div>
+          </div>
+        ) : (
+          <p className="mt-36 text-4xl">見つかりませんでした</p>
+        )}
+    </>)
 }
 
 export default LoadPokemon
