@@ -20,7 +20,7 @@ interface Pokemon{
 const LoadPokemon:React.FC<Props> = ({search})=>{
   const amountFetching:number = 24
   const [pokemons, setPokemons] = useState<Pokemon[]>([])
-  const [offset, setOffset] = useState<number>(0)
+  const [offset, setNextOffset] = useState<number>(0)
   const [isloading, setLoading] = useState<boolean>(false)
   const {ref, inView} = useInView()
 
@@ -34,16 +34,16 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
                                                 offset:(initDisplay) ? 0:offset
                                               })
       newPokemons = filteredResult.filteredData
-      setOffset(filteredResult.newOffset)
+      setNextOffset(filteredResult.newOffset)
     }else{
       newPokemons = (initDisplay) ? fetchedPokemons.slice(0, amountFetching)
                                   : fetchedPokemons.slice(offset, offset+amountFetching)
       if(initDisplay){
-        setOffset(amountFetching)
+        setNextOffset(amountFetching)
       }else if(newPokemons.length === amountFetching){
-        setOffset((prev) => prev+amountFetching)
+        setNextOffset((prev) => prev+amountFetching)
       }else{
-        setOffset(-1)
+        setNextOffset(-1)
       }
     }
 
