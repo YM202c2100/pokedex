@@ -47,6 +47,7 @@ const PokemonCard:React.FC<Props> = ({pokemon}) =>{
            alt={`Image of ${pokemonInfo?.name}`}
            width={300}
            height={300}
+           unoptimized
       />
       <span className="text-2xl">{pokemonInfo?.name}</span>
     </div>
