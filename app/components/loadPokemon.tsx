@@ -38,8 +38,9 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
     }else{
       newPokemons = (initDisplay) ? fetchedPokemons.slice(0, amountFetching)
                                   : fetchedPokemons.slice(offset, offset+amountFetching)
-
-      if(newPokemons.length === amountFetching){
+      if(initDisplay){
+        setOffset(amountFetching)
+      }else if(newPokemons.length === amountFetching){
         setOffset((prev) => prev+amountFetching)
       }else{
         setOffset(-1)
