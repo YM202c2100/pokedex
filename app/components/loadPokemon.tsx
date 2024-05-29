@@ -79,7 +79,7 @@ const LoadPokemon:React.FC<Props> = ({search})=>{
   return(<>
       {(pokemons.length === 0) && (!isloading) && <p className="mt-36 text-4xl">見つかりませんでした</p>}
 
-      <div className="flex justify-center flex-wrap w-full mx-auto mt-36 md:mt-16">
+      <div className="flex justify-center flex-wrap w-full mx-auto mt-44 sm:mt-36 md:mt-16">
         {pokemons.map(pokemon => <PokemonCard key={pokemon.name} pokemon={pokemon}/>)}
       </div>
       {isloading ? <div className="text-2xl my-28">Loading...</div>:<div ref={ref}>　</div>}
