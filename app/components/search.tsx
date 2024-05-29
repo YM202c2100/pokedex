@@ -31,7 +31,7 @@ const Search:React.FC = ()=>{
       <input type="text"
              onChange={(e)=>setText(e.target.value)} 
              value={text}
-             className="border-2 rounded-md"
+             className="border-2 rounded-md w-28"
       />
     </div>
   )
